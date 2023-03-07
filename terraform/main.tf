@@ -18,6 +18,7 @@ resource "azurerm_ssh_public_key" "sysadmin" {
   resource_group_name = azurerm_resource_group.main.name
 }
 
+
   resource "azurerm_subnet" "internal" {
   name                 = "internal"
   resource_group_name  = azurerm_resource_group.main.name
