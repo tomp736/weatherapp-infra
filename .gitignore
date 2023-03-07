@@ -1,0 +1,10 @@
+.terraform/*
+.terraform*
+terraform.*
+*.tfvars
+.deploy/*
+!.deploy/deploy.sh
+!.deploy/destroy.sh
+
+terraform/ansible_hosts_*
+ansible/inventory/ansible_hosts_*
