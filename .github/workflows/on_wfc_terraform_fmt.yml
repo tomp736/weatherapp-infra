@@ -1,4 +1,4 @@
-name: run lint script
+name: run terraform fmt
 
 on: 
   workflow_call:
@@ -6,6 +6,10 @@ on:
       autofix_pr_branch:
         type: string
         description: 'autofix pr branch'
+        required: true
+      autofix_pr_create:
+        type: boolean
+        description: 'create autofix pr'
         required: true
 
 jobs:
@@ -19,14 +23,14 @@ jobs:
         uses: hashicorp/setup-terraform@v2
       - 
         id: tf_fmt
-        name: run lint script
+        name: run terraform fmt
         working-directory: terraform
         run: |
           changes=$(terraform fmt --recursive | wc -l)
           echo "changes=$changes" >> $GITHUB_OUTPUT
       - 
         id: pr_vars
-        if: steps.tf_fmt.outputs.changes != '0'
+        if: ${{ steps.tf_fmt.outputs.changes != '0' && inputs.autofix_pr }}
         run: |
           pr_title="${{ inputs.autofix_pr_branch }} terraform format autofix"
           pr_branch=${{ inputs.autofix_pr_branch }}-tffmt-autofix
@@ -34,8 +38,8 @@ jobs:
           echo "pr_title=$pr_title" >> $GITHUB_OUTPUT
           echo "pr_branch=$pr_branch" >> $GITHUB_OUTPUT 
       - 
-        name: create lint pr
-        if: steps.tf_fmt.outputs.changes != '0'
+        name: create autofix pr
+        if: ${{ steps.tf_fmt.outputs.changes != '0' && inputs.autofix_pr }}
         id: create_pull_request
         uses: peter-evans/create-pull-request@v4
         with:
