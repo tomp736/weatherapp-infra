@@ -7,7 +7,7 @@ resource "azurerm_ssh_public_key" "sysadmin" {
   name                = "${var.prefix}-key"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
-  public_key          = file("~/.ssh/id_rsa.pub")
+  public_key          = var.deploy_pubkey
 }
 
 resource "azurerm_virtual_network" "main" {
