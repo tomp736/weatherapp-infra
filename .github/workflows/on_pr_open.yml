@@ -16,4 +16,6 @@ jobs:
   # run tffmt
   tffmt:      
     uses: ./.github/workflows/on_wfc_terraform_fmt.yml
+    with:
+      autofix_pr_branch: ${{ github.ref }}
     secrets: inherit
