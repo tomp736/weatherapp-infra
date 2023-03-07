@@ -17,5 +17,5 @@ This repository contains source code related to provisioning infrastructure that
 - [x] Create Azure Application
 - [x] Configure Azure Account
 - [x] Configure Terraform for Azure (Local development, CI)
-- [ ] Configure Terraform for remote backend.
+- [x] Configure Terraform for remote backend.
 - [ ] Introduce WeatherApp resources.
