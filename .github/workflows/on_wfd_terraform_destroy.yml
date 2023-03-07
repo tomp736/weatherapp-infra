@@ -7,6 +7,7 @@ jobs:
   deploy:
     uses: ./.github/workflows/on_wfc_terraform.yml
     with:
+      prefix: weatherapp-${{ github.ref_name }}
       environment: weatherapp_${{ github.ref_name }}
       tfdestroy: true
     secrets: inherit

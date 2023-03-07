@@ -3,6 +3,10 @@ name: 'on wfc terraform'
 on:
   workflow_call:
     inputs:
+      prefix:
+        type: string
+        description: environment
+        required: true
       environment:
         type: string
         description: environment
@@ -38,8 +42,8 @@ jobs:
       - 
         name: Create deploy.tfvars file
         run: |
-          echo "prefix = \"weather-${{ inputs.environment }}\"" > terraform/deploy.tfvars
-          echo "client_id = \"${{ secrets.TF_CLIENT_ID }}\"" > terraform/deploy.tfvars
+          echo "prefix = \"${{ inputs.prefix }}\"" > terraform/deploy.tfvars
+          echo "client_id = \"${{ secrets.TF_CLIENT_ID }}\"" >> terraform/deploy.tfvars
           echo "client_secret = \"${{ secrets.TF_CLIENT_SECRET }}\"" >> terraform/deploy.tfvars
           echo "tenant_id = \"${{ secrets.TF_TENANT_ID }}\"" >> terraform/deploy.tfvars
           echo "subscription_id = \"${{ secrets.TF_SUBSCRIPTION_ID }}\"" >> terraform/deploy.tfvars
