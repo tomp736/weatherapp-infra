@@ -1,11 +1,11 @@
-name: 'Manual Deploy'
+name: 'Dispatch Terraform Apply'
 
 on:
   workflow_dispatch:
       
 jobs:
   deploy:
-    uses: ./.github/workflows/workspace-deploy.yml
+    uses: ./.github/workflows/on_wfc_terraform_apply.yml
     with:
       ENVIRONMENT: weatherapp_${{ github.ref_name }}
     secrets: inherit

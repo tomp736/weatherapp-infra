@@ -1,5 +1,4 @@
-name: 'Workspace Deploy'
-
+name: 'on wfc terraform apply'
 
 on:
   workflow_call:

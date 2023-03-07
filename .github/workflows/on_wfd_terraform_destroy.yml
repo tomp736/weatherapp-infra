@@ -1,11 +1,11 @@
-name: 'Manual Destroy'
+name: 'Dispatch Terraform Destroy'
 
 on:
   workflow_dispatch:
       
 jobs:
   deploy:
-    uses: ./.github/workflows/workspace-destroy.yml
+    uses: ./.github/workflows/on_wfc_terraform_destroy.yml
     with:
       ENVIRONMENT: weatherapp_${{ github.ref_name }}
     secrets: inherit
