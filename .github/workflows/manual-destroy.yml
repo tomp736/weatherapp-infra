@@ -1,0 +1,11 @@
+name: 'Manual Destroy'
+
+on:
+  workflow_dispatch:
+      
+jobs:
+  deploy:
+    uses: ./.github/workflows/workspace-destroy.yml
+    with:
+      ENVIRONMENT: weatherapp_${{ github.ref_name }}
+    secrets: inherit
