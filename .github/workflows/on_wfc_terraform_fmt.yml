@@ -35,7 +35,7 @@ jobs:
           echo "pr_branch=$pr_branch" >> $GITHUB_OUTPUT 
       - 
         name: create lint pr
-        if: steps.tf_fmt.output.changes != '0'
+        if: steps.tf_fmt.outputs.changes != '0'
         id: create_pull_request
         uses: peter-evans/create-pull-request@v4
         with:

@@ -25,7 +25,7 @@ resource "azurerm_ssh_public_key" "sysadmin" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
-resource "azurerm_public_ip" "main" {
+  resource "azurerm_public_ip" "main" {
   name                = "${var.prefix}-pip"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
