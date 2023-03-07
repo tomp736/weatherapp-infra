@@ -1,4 +1,4 @@
-name: on push 
+name: 'on push pr'
 on: 
   workflow_dispatch:    
   push:
@@ -6,8 +6,6 @@ on:
       - '**'
       - '!*-promotion'
       - '!*-autofix'
-    paths:
-      - "terraform/**"
 
 jobs:
 
@@ -50,23 +48,12 @@ jobs:
           echo "create=$create" >> $GITHUB_OUTPUT
           echo "branch_source=$branch_source" >> $GITHUB_OUTPUT
           echo "branch_target=$branch_target" >> $GITHUB_OUTPUT
-  
-  tffmt:     
-
-    needs:
-      - prepare
-    uses: ./.github/workflows/on_wfc_terraform_fmt.yml
-    with:
-      autofix_pr_branch: ${{ needs.prepare.outputs.pull_request_branch_source }}
-      autofix_pr_create: true
-    secrets: inherit
 
   create_pull:
 
     if: needs.prepare.outputs.pull_request_create == '1'
     needs:
       - prepare
-      - tffmt
 
     uses: ./.github/workflows/on_wfc_create_pr.yml
     with:

@@ -1,4 +1,4 @@
-name: on push 
+name: 'on push terraform'
 on: 
   workflow_dispatch:    
   push:
@@ -6,7 +6,7 @@ on:
       - '**'
       - '!*-promotion'
       - '!*-autofix'
-    paths-ignore:
+    paths:
       - "terraform/**"
 
 jobs:
@@ -50,16 +50,13 @@ jobs:
           echo "create=$create" >> $GITHUB_OUTPUT
           echo "branch_source=$branch_source" >> $GITHUB_OUTPUT
           echo "branch_target=$branch_target" >> $GITHUB_OUTPUT
+  
+  tffmt:     
 
-  create_pull:
-
-    if: needs.prepare.outputs.pull_request_create == '1'
     needs:
       - prepare
-
-    uses: ./.github/workflows/on_wfc_create_pr.yml
+    uses: ./.github/workflows/on_wfc_terraform_fmt.yml
     with:
-      source_branch: ${{ needs.prepare.outputs.pull_request_branch_source }}
-      target_branch: ${{ needs.prepare.outputs.pull_request_branch_target }}
-      promotion_tag: 'promotion'
+      autofix_pr_branch: ${{ needs.prepare.outputs.pull_request_branch_source }}
+      autofix_pr_create: true
     secrets: inherit
