@@ -10,11 +10,13 @@ on:
       tfapply:
         type: boolean
         description: if true will apply
-        required: true
+        required: false
+        default: false
       tfdestroy:
         type: boolean
         description: if true will destroy
-        required: true
+        required: false
+        default: false
 
 permissions:
   contents: read
