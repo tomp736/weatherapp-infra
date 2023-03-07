@@ -66,13 +66,6 @@ jobs:
           echo "Update providers.tf for remote backend"
           sed -i 's|local|remote|g' terraform/providers.tf
       - 
-        name: Add key to agent.
-        run: |
-          eval `ssh-agent`
-          echo "${KEYFILE}" | ssh-add -
-        env:
-          KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
-      - 
         name: Terraform Init
         run: |
           terraform -chdir=terraform init -backend-config=config.remote.tfbackend
@@ -87,14 +80,20 @@ jobs:
       - 
         name: Terraform Apply
         if: ${{ inputs.tfapply }}
-        run: |      
+        run: |
+          eval `ssh-agent`
+          echo "${KEYFILE}" | ssh-add -
           terraform -chdir=terraform apply tfplan
         env:
+          KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
           TF_CLI_CONFIG_FILE: default.tfrc
       - 
         name: Terraform Destroy
         if: ${{ inputs.tfdestroy }}
         run: |
+          eval `ssh-agent`
+          echo "${KEYFILE}" | ssh-add -
           terraform -chdir=terraform destroy --var-file=deploy.tfvars -auto-approve -input=false
         env:
+          KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
           TF_CLI_CONFIG_FILE: default.tfrc
