@@ -6,11 +6,13 @@ on:
       autofix_pr_branch:
         type: string
         description: 'autofix pr branch'
-        required: true
+        required: false
+        default: ''
       autofix_pr_create:
         type: boolean
         description: 'create autofix pr'
-        required: true
+        required: false
+        default: false
 
 jobs:
   lint:

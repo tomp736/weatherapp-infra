@@ -58,6 +58,7 @@ jobs:
     uses: ./.github/workflows/on_wfc_terraform_fmt.yml
     with:
       autofix_pr_branch: ${{ needs.prepare.outputs.pull_request_branch_source }}
+      autofix_pr_create: true
     secrets: inherit
 
   create_pull:
