@@ -22,7 +22,7 @@ jobs:
         name: run lint script
         working-directory: terraform
         run: |
-          changes=(terraform fmt --recursive | wc -l)
+          changes=$(terraform fmt --recursive | wc -l)
           echo "changes=$changes" >> $GITHUB_OUTPUT
       - 
         id: pr_vars
