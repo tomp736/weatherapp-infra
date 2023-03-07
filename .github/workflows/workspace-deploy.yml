@@ -58,7 +58,7 @@ jobs:
         TF_CLI_CONFIG_FILE: default.tfrc
     - 
       name: Terraform Plan
-      run: terraform -chdir=terraform plan --var-file=default.tfvars -out=tfplan -input=false
+      run: terraform -chdir=terraform plan --var-file=deploy.tfvars -out=tfplan -input=false
       env:
         TF_CLI_CONFIG_FILE: default.tfrc
     - 
