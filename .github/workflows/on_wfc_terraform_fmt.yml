@@ -6,13 +6,7 @@ on:
       autofix_pr_branch:
         type: string
         description: 'autofix pr branch'
-        required: false
-        default: 'autofix'
-      autofix_pr:
-        type: boolean
-        description: 'autofix pr'
-        required: false
-        default: false
+        required: true
 
 jobs:
   lint:
@@ -34,8 +28,8 @@ jobs:
         id: pr_vars
         if: steps.tf_fmt.output.changes != '0'
         run: |
-          pr_title="${{ inputs.autofix_pr_branch }} terraform format autofix pr"
-          pr_branch=${{ inputs.autofix_pr_branch }}-terraform-fmt
+          pr_title="${{ inputs.autofix_pr_branch }} terraform format autofix"
+          pr_branch=${{ inputs.autofix_pr_branch }}-tffmt-autofix
           
           echo "pr_title=$pr_title" >> $GITHUB_OUTPUT
           echo "pr_branch=$pr_branch" >> $GITHUB_OUTPUT 
