@@ -1,4 +1,5 @@
 terraform {
+  backend "local" {}
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -6,7 +7,6 @@ terraform {
     }
   }
 }
-
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {

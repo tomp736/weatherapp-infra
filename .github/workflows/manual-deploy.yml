@@ -1,0 +1,11 @@
+name: 'Manual Deploy'
+
+on:
+  workflow_dispatch:
+      
+jobs:
+  deploy:
+    uses: ./.github/workflows/workspace-deploy.yml
+    with:
+      ENVIRONMENT: weatherapp_${{ github.ref_name }}
+    secrets: inherit
