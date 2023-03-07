@@ -1,0 +1,67 @@
+name: 'Workspace Deploy'
+
+
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        type: string
+        description: Terraform Remote Workspace
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: 'terraform'
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/labrats-work/ops-images/omnibus:latest
+    environment: ${{ inputs.ENVIRONMENT }}
+    concurrency: 
+      group: ${{ inputs.ENVIRONMENT }}
+      cancel-in-progress: false
+    steps:
+    - 
+      name: Checkout
+      uses: actions/checkout@v3
+    - 
+      name: Create deploy.tfvars file
+      run: |
+        echo "client_id = \"${{ secrets.TF_CLIENT_ID }}\"" > terraform/deploy.tfvars
+        echo "client_secret = \"${{ secrets.TF_CLIENT_SECRET }}\"" >> terraform/deploy.tfvars
+        echo "tenant_id = \"${{ secrets.TF_TENANT_ID }}\"" >> terraform/deploy.tfvars
+        echo "subscription_id = \"${{ secrets.TF_SUBSCRIPTION_ID }}\"" >> terraform/deploy.tfvars
+        echo "deploy_pubkey = \"${{ secrets.DEPLOY_PUBKEY }}\"" >> terraform/deploy.tfvars
+    - 
+      name: Apply changes for remote backend
+      run: |
+        echo "Create default.tfrc file"
+        echo "# default.tfrc" > default.tfrc
+        echo "credentials \"app.terraform.io\" {" >> default.tfrc
+        echo "  token = \"${{ secrets.TFCLOUD_TOKEN }}\"" >> default.tfrc
+        echo "}" >> default.tfrc
+
+        echo "Create config.remote.tfbackend"
+        echo "# config.remote.tfbackend" > terraform/config.remote.tfbackend
+        echo "workspaces { name = \"${{ inputs.ENVIRONMENT }}\" }" >> terraform/config.remote.tfbackend
+        echo "hostname     = \"app.terraform.io\"" >> terraform/config.remote.tfbackend
+        echo "organization = \"labrats-work\"" >> terraform/config.remote.tfbackend 
+
+        echo "Update providers.tf for remote backend"
+        sed -i 's|local|remote|g' terraform/providers.tf
+    - 
+      name: Terraform Init
+      run: terraform -chdir=terraform init -backend-config=config.remote.tfbackend
+      env:
+        TF_CLI_CONFIG_FILE: default.tfrc
+    - 
+      name: Terraform Apply
+      run: |      
+        eval `ssh-agent`
+        echo "${KEYFILE}" | ssh-add -
+        terraform -chdir=terraform destroy --var-file=deploy.tfvars
+      env:
+        KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
+        TF_CLI_CONFIG_FILE: default.tfrc

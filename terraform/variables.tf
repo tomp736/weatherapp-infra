@@ -23,3 +23,7 @@ variable "client_id" {
 variable "client_secret" {
   description = "azure rm client secret."
 }
+
+variable "deploy_pubkey" {
+  description = "public key for deployments."
+}
