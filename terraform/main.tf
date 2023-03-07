@@ -32,7 +32,7 @@ resource "azurerm_public_ip" "main" {
   allocation_method   = "Static"
 }
 
-resource "azurerm_network_interface" "main" {
+  resource "azurerm_network_interface" "main" {
   name                = "${var.prefix}-nic"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
