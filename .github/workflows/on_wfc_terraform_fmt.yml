@@ -1,0 +1,50 @@
+name: run lint script
+
+on: 
+  workflow_call:
+    inputs:
+      autofix_pr_branch:
+        type: string
+        description: 'autofix pr branch'
+        required: false
+        default: 'autofix'
+      autofix_pr:
+        type: boolean
+        description: 'autofix pr'
+        required: false
+        default: false
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/labrats-work/ops-images/omnibus:latest
+
+    steps:
+      - 
+        uses: actions/checkout@v3
+      - 
+        id: tf_fmt
+        name: run lint script
+        working-directory: terraform
+        run: |
+          changes=(terraform fmt --recursive | wc -l)
+          echo "changes=$changes" >> $GITHUB_OUTPUT
+      - 
+        id: pr_vars
+        if: steps.tf_fmt.output.changes != '0'
+        run: |
+          pr_title="${{ inputs.autofix_pr_branch }} terraform format autofix pr"
+          pr_branch=${{ inputs.autofix_pr_branch }}-terraform-fmt
+          
+          echo "pr_title=$pr_title" >> $GITHUB_OUTPUT
+          echo "pr_branch=$pr_branch" >> $GITHUB_OUTPUT 
+      - 
+        name: create lint pr
+        if: steps.tf_fmt.output.changes != '0'
+        id: create_pull_request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+          title: ${{ steps.pr_vars.outputs.pr_title }}
+          branch: ${{ steps.pr_vars.outputs.pr_branch }}
