@@ -60,7 +60,7 @@ jobs:
       run: |      
         eval `ssh-agent`
         echo "${KEYFILE}" | ssh-add -
-        terraform -chdir=terraform destroy --var-file=deploy.tfvars
+        terraform -chdir=terraform destroy --var-file=deploy.tfvars -auto-approve -input=false
       env:
         KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
         TF_CLI_CONFIG_FILE: default.tfrc
