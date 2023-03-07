@@ -10,7 +10,8 @@ resource "azurerm_ssh_public_key" "sysadmin" {
   public_key          = var.deploy_pubkey
 }
 
- resource "azurerm_virtual_network" "main" {
+ 
+  resource "azurerm_virtual_network" "main" {
   name                = "${var.prefix}-network"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.main.location
