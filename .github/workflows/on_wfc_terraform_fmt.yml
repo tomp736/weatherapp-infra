@@ -1,0 +1,50 @@
+name: run terraform fmt
+
+on: 
+  workflow_call:
+    inputs:
+      autofix_pr_branch:
+        type: string
+        description: 'autofix pr branch'
+        required: false
+        default: ''
+      autofix_pr_create:
+        type: boolean
+        description: 'create autofix pr'
+        required: false
+        default: false
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - 
+        uses: actions/checkout@v3
+      - 
+        uses: hashicorp/setup-terraform@v2
+      - 
+        id: tf_fmt
+        name: run terraform fmt
+        working-directory: terraform
+        run: |
+          changes=$(terraform fmt --recursive | wc -l)
+          echo "changes=$changes" >> $GITHUB_OUTPUT
+      - 
+        id: pr_vars
+        if: ${{ steps.tf_fmt.outputs.changes != '0' && inputs.autofix_pr }}
+        run: |
+          pr_title="${{ inputs.autofix_pr_branch }} terraform format autofix"
+          pr_branch=${{ inputs.autofix_pr_branch }}-tffmt-autofix
+          
+          echo "pr_title=$pr_title" >> $GITHUB_OUTPUT
+          echo "pr_branch=$pr_branch" >> $GITHUB_OUTPUT 
+      - 
+        name: create autofix pr
+        if: ${{ steps.tf_fmt.outputs.changes != '0' && inputs.autofix_pr }}
+        id: create_pull_request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+          title: ${{ steps.pr_vars.outputs.pr_title }}
+          branch: ${{ steps.pr_vars.outputs.pr_branch }}
