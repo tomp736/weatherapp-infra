@@ -1,0 +1,24 @@
+name: 'Dispatch Ansible Apply'
+
+on:
+  workflow_dispatch:
+    inputs:
+      site:
+        type: boolean
+        description: 'run site playbook'
+        required: false
+        default: false
+      weatherapp:
+        type: boolean
+        description: 'run weatherapp playbook'
+        required: false
+        default: false
+      
+jobs:
+  deploy:
+    uses: ./.github/workflows/on_wfc_ansible.yml
+    with:
+      environment: weatherapp_${{ github.ref_name }}
+      site: ${{ inputs.site }}
+      weatherapp: ${{ inputs.weatherapp }}
+    secrets: inherit
