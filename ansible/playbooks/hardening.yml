@@ -1,16 +1,13 @@
----      
+---
 # Apply devsec hardening roles for ssh and os.
 # file: hardening.yml
 
 - name: DevSec Configuration
   hosts: site
-  become: yes
-  
-  collections:
-  - devsec.hardening
+  become: true
 
   tasks:
-    - 
+    -
       name: DevSec Roles
 
       vars:
@@ -20,10 +17,10 @@
 
       block:
 
-      - name: Apply DevSec SSH Hardening Role
-        ansible.builtin.import_role:
-          name: devsec.hardening.ssh_hardening
+        - name: Apply DevSec SSH Hardening Role
+          ansible.builtin.import_role:
+            name: devsec.hardening.ssh_hardening
 
-      - name: Apply DevSec OS Hardening role
-        ansible.builtin.import_role:
-          name: devsec.hardening.os_hardening
+        - name: Apply DevSec OS Hardening role
+          ansible.builtin.import_role:
+            name: devsec.hardening.os_hardening
