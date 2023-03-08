@@ -1,0 +1,4 @@
+[site]
+%{~for node in site_children}
+${node.name} ansible_host=${node.ansible_host}
+%{~endfor}
