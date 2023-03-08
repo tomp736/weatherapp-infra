@@ -51,6 +51,15 @@ jobs:
           name: ansible_hosts_site
           path: ansible/inventory
       -       
+        name: ansible requirements
+        working-directory: ansible
+        run: |
+          eval `ssh-agent`
+          echo "${KEYFILE}" | ssh-add -
+          ansible-galaxy install -r requirements.yml
+        env:
+          KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
+      -       
         name: site playbook
         working-directory: ansible
         run: |
