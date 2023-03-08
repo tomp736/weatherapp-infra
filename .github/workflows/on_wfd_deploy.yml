@@ -1,4 +1,4 @@
-name: 'Dispatch Terraform Apply'
+name: 'Dispatch Deploy'
 
 on:
   workflow_dispatch:
