@@ -101,7 +101,7 @@ jobs:
         with:
           name: ansible_hosts_site
           path: |
-            ansible_hosts_site
+            terraform/ansible_hosts_site
       - 
         name: Terraform Destroy
         if: ${{ inputs.tfdestroy }}
