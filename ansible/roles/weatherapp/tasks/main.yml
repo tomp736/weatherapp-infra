@@ -10,6 +10,8 @@
     restart_policy: always
     ports:
       - '8000:8000'
+    env:
+      ENDPOINT="http://{{ hostvars[inventory_hostname]['ansible_host'] }}:9000/api"
 -
   name: Weatherapp backend docker container
   community.docker.docker_container:
