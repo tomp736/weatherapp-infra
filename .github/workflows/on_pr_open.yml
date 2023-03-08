@@ -13,6 +13,11 @@ on:
 
 jobs:
 
+  # run ansible-lint
+  ansible-lint:      
+    uses: ./.github/workflows/on_wfc_ansible_lint.yml
+    secrets: inherit
+
   # run tffmt
   tffmt:      
     uses: ./.github/workflows/on_wfc_terraform_fmt.yml

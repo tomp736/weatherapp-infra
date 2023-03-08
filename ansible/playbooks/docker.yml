@@ -4,12 +4,10 @@
 
 - name: Docker Configuration
   hosts: site
-  remote_user: sysadmin
-  become: yes
+  become: true
 
-  tasks: 
-
-    - 
+  tasks:
+    -
       name: Docker Roles
       block:
         - name: Apply Docker Role
