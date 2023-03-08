@@ -1,4 +1,4 @@
-name: 'cron nightly deploy test'
+name: 'cron deploy nightly'
 
 on:
   workflow_dispatch:
