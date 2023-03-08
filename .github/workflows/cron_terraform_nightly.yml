@@ -12,7 +12,6 @@ jobs:
       prefix: weatherapp-nightly
       environment: weatherapp_nightly
       tfapply: true
-      tfdestroy: true
     secrets: inherit
 
   ansible:
@@ -32,6 +31,5 @@ jobs:
     with:
       prefix: weatherapp-nightly
       environment: weatherapp_nightly
-      tfapply: true
       tfdestroy: true
     secrets: inherit
