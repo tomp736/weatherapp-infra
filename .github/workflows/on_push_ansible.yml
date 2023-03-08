@@ -56,7 +56,7 @@ jobs:
     needs:
       - prepare
     uses: ./.github/workflows/on_wfc_ansible_lint.yml
-    with:
-      autofix_pr_branch: ${{ needs.prepare.outputs.pull_request_branch_source }}
-      autofix_pr_create: true
+    # with:
+    #   autofix_pr_branch: ${{ needs.prepare.outputs.pull_request_branch_source }}
+    #   autofix_pr_create: true
     secrets: inherit
