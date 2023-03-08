@@ -27,17 +27,6 @@ jobs:
       - 
         uses: actions/checkout@v3
       - 
-        name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - 
-        name: Install dependencies Including Ansible
-        working-directory: ansible
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - 
         name: Run ansible-lint
         uses: ansible/ansible-lint-action@v6
         with:
