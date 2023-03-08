@@ -1,0 +1,54 @@
+name: 'Dispatch Terraform Apply'
+
+on:
+  workflow_dispatch:
+    inputs:
+      terraform_apply:
+        type: boolean
+        description: 'run site playbook'
+        required: false
+        default: true
+      terraform_destroy:
+        type: boolean
+        description: 'run site playbook'
+        required: false
+        default: false
+      ansible_site:
+        type: boolean
+        description: 'run site playbook'
+        required: false
+        default: true
+      ansible_weatherapp:
+        type: boolean
+        description: 'run weatherapp playbook'
+        required: false
+        default: true
+      
+jobs:
+  terraform-apply:
+    uses: ./.github/workflows/on_wfc_terraform.yml
+    with:
+      environment: weatherapp_${{ github.ref_name }}
+      prefix: weatherapp-${{ github.ref_name }}
+      tfapply: ${{ inputs.terraform_apply }}
+    secrets: inherit
+
+  ansible:
+    needs:
+    - terraform
+    uses: ./.github/workflows/on_wfc_ansible.yml
+    with:
+      environment: weatherapp_${{ github.ref_name }}
+      site: ${{ inputs.ansible_site }}
+      weatherapp: ${{ inputs.ansible_weatherapp }}
+    secrets: inherit
+
+  terraform-destroy:
+    needs:
+    - ansible
+    uses: ./.github/workflows/on_wfc_terraform.yml
+    with:
+      environment: weatherapp_${{ github.ref_name }}
+      prefix: weatherapp-${{ github.ref_name }}
+      tfdestroy: ${{ inputs.terraform_destroy }}
+    secrets: inherit
