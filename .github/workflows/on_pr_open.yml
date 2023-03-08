@@ -13,8 +13,8 @@ on:
 
 jobs:
 
-  # run tffmt
-  ansible:      
+  # run ansible-lint
+  ansible-lint:      
     uses: ./.github/workflows/on_wfc_ansible_lint.yml
     secrets: inherit
 
