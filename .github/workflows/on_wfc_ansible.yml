@@ -37,6 +37,6 @@ jobs:
           eval `ssh-agent`
           echo "${KEYFILE}" | ssh-add -
           ansible-playbook -i inventory/ansible_hosts_site site.yml
-          ansible-playbook -i inventory/ansible_hosts_site weatherapp.yml --extra-vars "weatherapp_appid=${{ secrets.weatherapp_appid }}"
+          ansible-playbook -i inventory/ansible_hosts_site weatherapp.yml --extra-vars "weatherapp_appid=${{ secrets.WEATHERAPP_APPID }}"
         env:
           KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
