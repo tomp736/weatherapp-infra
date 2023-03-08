@@ -6,7 +6,28 @@ on:
     - cron:  '0 0 * * *'
       
 jobs:
-  deploy:
+  terraform-apply:
+    uses: ./.github/workflows/on_wfc_terraform.yml
+    with:
+      prefix: weatherapp-nightly
+      environment: weatherapp_nightly
+      tfapply: true
+      tfdestroy: true
+    secrets: inherit
+
+  ansible:
+    needs:
+      - terraform-apply
+    uses: ./.github/workflows/on_wfc_ansible.yml
+    with:
+      environment: weatherapp_nightly
+      site: true
+      weatherapp: true
+    secrets: inherit
+
+  terraform-destroy:
+    needs:
+    - ansible
     uses: ./.github/workflows/on_wfc_terraform.yml
     with:
       prefix: weatherapp-nightly

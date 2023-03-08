@@ -3,11 +3,11 @@ name: 'on wfc terraform'
 on:
   workflow_call:
     inputs:
-      prefix:
+      environment:
         type: string
         description: environment
         required: true
-      environment:
+      prefix:
         type: string
         description: environment
         required: true
@@ -21,6 +21,10 @@ on:
         description: if true will destroy
         required: false
         default: false
+    outputs:
+      firstword:
+        description: "The first output string"
+        value: ${{ jobs.example_job.outputs.output1 }}
 
 permissions:
   contents: read
@@ -33,6 +37,8 @@ jobs:
     concurrency: 
       group: ${{ inputs.environment }}
       cancel-in-progress: false
+    outputs:
+      output1: ${{ steps.step1.outputs.firstword }}
     steps:
       - 
         name: Checkout
@@ -88,6 +94,14 @@ jobs:
         env:
           KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
           TF_CLI_CONFIG_FILE: default.tfrc
+      - 
+        name: Archive artifacts
+        if: ${{ inputs.tfapply }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ansible_hosts_site
+          path: |
+            ansible_hosts_site
       - 
         name: Terraform Destroy
         if: ${{ inputs.tfdestroy }}
