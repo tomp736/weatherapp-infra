@@ -38,4 +38,6 @@ This repository contains source code related to provisioning infrastructure that
     - [ ] Configure docker network(s)
     - [x] Configure docker container(s)
 - [x] CI workflows
-    - [x] ansible-playbook
+    - [x] ansible-playbook for site
+    - [x] ansible-playbook for containers
+    - [x] ansible-lint
