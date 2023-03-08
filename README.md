@@ -27,13 +27,13 @@ This repository contains source code related to provisioning infrastructure that
     - [x] Deploy
     - [x] Destroy
     - [x] Tffmt
-- [ ] Generate ansible inventory
+- [x] Generate ansible inventory
 
 ### Ansible
-- [ ] Create Ansible project.
-- [ ] Create Ansible playbook for configuring machine.
+- [x] Create Ansible project.
+- [x] Create Ansible playbook for configuring machine.
     - [ ] Create user for docker
-    - [ ] Install docker
+    - [x] Install docker
 - [ ] Create Ansible playbook for configuring weatherapp.
     - [ ] Configure docker network(s)
     - [ ] Configure docker container(s)

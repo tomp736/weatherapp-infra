@@ -77,7 +77,7 @@ resource "azurerm_linux_virtual_machine" "main" {
 
   provisioner "remote-exec" {
     inline = [
-      "ls -la /tmp",
+      "echo hello vm",
     ]
 
     connection {
@@ -88,4 +88,16 @@ resource "azurerm_linux_virtual_machine" "main" {
       port  = "22"
     }
   }
+}
+
+
+
+resource "local_file" "ansible_inventory_site" {
+  content = templatefile("files/templates/site.tftpl", {
+    site_children = [{
+      name         = azurerm_linux_virtual_machine.main.computer_name,
+      ansible_host = azurerm_linux_virtual_machine.main.public_ip_address
+    }]
+  })
+  filename = "ansible_hosts_site"
 }
