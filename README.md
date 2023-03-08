@@ -34,8 +34,8 @@ This repository contains source code related to provisioning infrastructure that
 - [x] Create Ansible playbook for configuring machine.
     - [ ] Create user for docker
     - [x] Install docker
-- [ ] Create Ansible playbook for configuring weatherapp.
+- [x] Create Ansible playbook for configuring weatherapp.
     - [ ] Configure docker network(s)
-    - [ ] Configure docker container(s)
-- [ ] CI workflows
-    - [ ] ansible-playbook install
+    - [x] Configure docker container(s)
+- [x] CI workflows
+    - [x] ansible-playbook
