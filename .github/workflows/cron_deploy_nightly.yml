@@ -7,29 +7,12 @@ on:
       
 jobs:
   terraform-apply:
-    uses: ./.github/workflows/on_wfc_terraform.yml
+    uses: ./.github/workflows/on_wfc_deploy.yml
     with:
       prefix: weatherapp-nightly
       environment: weatherapp_nightly
-      tfapply: true
-    secrets: inherit
-
-  ansible:
-    needs:
-      - terraform-apply
-    uses: ./.github/workflows/on_wfc_ansible.yml
-    with:
-      environment: weatherapp_nightly
-      site: true
-      weatherapp: true
-    secrets: inherit
-
-  terraform-destroy:
-    needs:
-    - ansible
-    uses: ./.github/workflows/on_wfc_terraform.yml
-    with:
-      prefix: weatherapp-nightly
-      environment: weatherapp_nightly
-      tfdestroy: true
+      terraform_apply: true
+      ansible_site: true
+      ansible_weatherapp: true
+      terraform_destroy: true
     secrets: inherit

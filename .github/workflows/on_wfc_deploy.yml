@@ -1,0 +1,64 @@
+name: 'on wfc deploy'
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: 'environment'
+        required: false
+        default: true
+      resource_prefix:
+        type: string
+        description: 'resource prefix'
+        required: false
+        default: true
+      terraform_apply:
+        type: boolean
+        description: 'terraform apply'
+        required: false
+        default: true
+      ansible_site:
+        type: boolean
+        description: 'run site playbook'
+        required: false
+        default: true
+      ansible_weatherapp:
+        type: boolean
+        description: 'run weatherapp playbook'
+        required: false
+        default: true
+      terraform_destroy:
+        type: boolean
+        description: 'terraform destroy'
+        required: false
+        default: false
+      
+jobs:
+  terraform-apply:
+    uses: ./.github/workflows/on_wfc_terraform.yml
+    with:
+      environment: ${{ inputs.environment }}
+      prefix: ${{ inputs.resource_prefix }}
+      tfapply: ${{ inputs.terraform_apply }}
+    secrets: inherit
+
+  ansible:
+    needs:
+    - terraform-apply
+    uses: ./.github/workflows/on_wfc_ansible.yml
+    with:
+      environment: weatherapp_${{ github.ref_name }}
+      site: ${{ inputs.ansible_site }}
+      weatherapp: ${{ inputs.ansible_weatherapp }}
+    secrets: inherit
+
+  terraform-destroy:
+    needs:
+    - ansible
+    uses: ./.github/workflows/on_wfc_terraform.yml
+    with:
+      environment: ${{ inputs.environment }}
+      prefix: ${{ inputs.resource_prefix }}
+      tfdestroy: ${{ inputs.terraform_destroy }}
+    secrets: inherit
