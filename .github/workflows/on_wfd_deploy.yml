@@ -25,30 +25,13 @@ on:
         default: false
       
 jobs:
-  terraform-apply:
-    uses: ./.github/workflows/on_wfc_terraform.yml
+  deploy:
+    uses: ./.github/workflows/on_wfc_deploy.yml
     with:
       environment: weatherapp_${{ github.ref_name }}
-      prefix: weatherapp-${{ github.ref_name }}
-      tfapply: ${{ inputs.terraform_apply }}
-    secrets: inherit
-
-  ansible:
-    needs:
-    - terraform-apply
-    uses: ./.github/workflows/on_wfc_ansible.yml
-    with:
-      environment: weatherapp_${{ github.ref_name }}
-      site: ${{ inputs.ansible_site }}
-      weatherapp: ${{ inputs.ansible_weatherapp }}
-    secrets: inherit
-
-  terraform-destroy:
-    needs:
-    - ansible
-    uses: ./.github/workflows/on_wfc_terraform.yml
-    with:
-      environment: weatherapp_${{ github.ref_name }}
-      prefix: weatherapp-${{ github.ref_name }}
-      tfdestroy: ${{ inputs.terraform_destroy }}
+      resource_prefix: weatherapp-${{ github.ref_name }}
+      terraform_apply: ${{ inputs.terraform_apply }}
+      ansible_site: ${{ inputs.ansible_site }}
+      ansible_weatherapp: ${{ inputs.ansible_weatherapp }}
+      terraform_destroy: ${{ inputs.terraform_destroy }}
     secrets: inherit
