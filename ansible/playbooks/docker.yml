@@ -6,9 +6,8 @@
   hosts: site
   become: true
 
-  tasks: 
-
-    - 
+  tasks:
+    -
       name: Docker Roles
       block:
         - name: Apply Docker Role
