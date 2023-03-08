@@ -45,6 +45,12 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - 
+        name: Download ansible_hosts_site
+        uses: actions/download-artifact@v3
+        with:
+          name: ansible_hosts_site
+          path: ansible/inventory
+      -       
         name: site playbook
         working-directory: ansible
         run: |
