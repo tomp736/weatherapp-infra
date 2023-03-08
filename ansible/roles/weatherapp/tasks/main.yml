@@ -1,7 +1,7 @@
 ---
 # tasks file for weatherapp
 
-- 
+-
   name: Weatherapp frontend docker container
   community.docker.docker_container:
     name: weatherapp_frontend
@@ -10,7 +10,7 @@
     restart_policy: always
     ports:
       - '8000:8000'
-- 
+-
   name: Weatherapp backend docker container
   community.docker.docker_container:
     name: weatherapp_backend

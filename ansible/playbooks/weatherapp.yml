@@ -4,11 +4,10 @@
 
 - name: WeatherApp Configuration
   hosts: site
-  become: yes
+  become: true
 
-  tasks: 
-
-    - 
+  tasks:
+    -
       name: WeatherApp Role
       block:
         - name: Apply WeatherApp Role
