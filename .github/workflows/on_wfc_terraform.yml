@@ -3,11 +3,11 @@ name: 'on wfc terraform'
 on:
   workflow_call:
     inputs:
-      prefix:
+      environment:
         type: string
         description: environment
         required: true
-      environment:
+      prefix:
         type: string
         description: environment
         required: true
