@@ -4,7 +4,6 @@
 
 - name: Docker Configuration
   hosts: site
-  remote_user: sysadmin
   become: yes
 
   tasks: 

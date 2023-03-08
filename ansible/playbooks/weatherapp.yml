@@ -1,0 +1,16 @@
+---
+# Comment here
+# file: weatherapp.yml
+
+- name: WeatherApp Configuration
+  hosts: site
+  become: yes
+
+  tasks: 
+
+    - 
+      name: WeatherApp Role
+      block:
+        - name: Apply WeatherApp Role
+          ansible.builtin.import_role:
+            name: weatherapp

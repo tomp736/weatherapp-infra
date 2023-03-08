@@ -1,5 +1,5 @@
 ---
 # file: site.yml
 
-# - import_playbook: playbooks/hardening.yml
-- import_playbook: playbooks/docker.yml
+ - import_playbook: playbooks/hardening.yml
+ - import_playbook: playbooks/docker.yml
