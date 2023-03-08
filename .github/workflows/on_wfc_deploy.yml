@@ -48,7 +48,7 @@ jobs:
     - terraform-apply
     uses: ./.github/workflows/on_wfc_ansible.yml
     with:
-      environment: weatherapp_${{ github.ref_name }}
+      environment: ${{ inputs.environment }}
       site: ${{ inputs.ansible_site }}
       weatherapp: ${{ inputs.ansible_weatherapp }}
     secrets: inherit
