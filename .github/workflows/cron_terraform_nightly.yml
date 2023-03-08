@@ -16,6 +16,8 @@ jobs:
     secrets: inherit
 
   ansible:
+    needs:
+      - terraform
     uses: ./.github/workflows/on_wfc_ansible.yml
     with:
       environment: weatherapp_nightly
