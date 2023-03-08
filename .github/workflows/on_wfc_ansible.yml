@@ -2,6 +2,21 @@ name: 'on wfc ansible'
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: environment
+        required: true
+      site:
+        type: boolean
+        description: 'run site playbook'
+        required: false
+        default: false
+      weatherapp:
+        type: boolean
+        description: 'run weatherapp playbook'
+        required: false
+        default: false
 
 permissions:
   contents: read
@@ -18,7 +33,6 @@ jobs:
       - 
         name: Checkout
         uses: actions/checkout@v3
-
       - 
         name: Set up Python 3.9
         uses: actions/setup-python@v2
@@ -31,12 +45,20 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - 
-        name: run playbook
+        name: site playbook
         working-directory: ansible
         run: |
           eval `ssh-agent`
           echo "${KEYFILE}" | ssh-add -
           ansible-playbook -i inventory/ansible_hosts_site site.yml
+        env:
+          KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
+      - 
+        name: weatherapp playbook
+        working-directory: ansible
+        run: |
+          eval `ssh-agent`
+          echo "${KEYFILE}" | ssh-add -
           ansible-playbook -i inventory/ansible_hosts_site weatherapp.yml --extra-vars "weatherapp_appid=${{ secrets.WEATHERAPP_APPID }}"
         env:
           KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
