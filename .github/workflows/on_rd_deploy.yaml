@@ -20,5 +20,5 @@ jobs:
       ansible_site: true
       ansible_weatherapp: true
       ansible_weatherapp_version: "${{ github.event.client_payload.weatherapp_version }}"
-      terraform_destroy: true
+      terraform_destroy: false
     secrets: inherit
