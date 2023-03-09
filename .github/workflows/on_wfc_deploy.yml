@@ -39,7 +39,7 @@ on:
         default: false
 
 concurrency: 
-  group: "weatherapp_${{ github.event.client_payload.environment }}"
+  group: ${{ inputs.environment }}
   cancel-in-progress: false
 
 jobs:
