@@ -23,7 +23,7 @@ This repository contains source code related to provisioning infrastructure that
 
 - [x] Configure Terraform for Azure (Local development, CI)
 - [x] Configure Terraform for remote backend.
-- [ ] CI workflows
+- [x] CI workflows
     - [x] Deploy
     - [x] Destroy
     - [x] Tffmt
