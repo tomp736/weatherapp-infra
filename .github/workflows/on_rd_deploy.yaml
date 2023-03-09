@@ -6,10 +6,6 @@ on:
 permissions:
   contents: write
 
-concurrency: 
-  group: "weatherapp_${{ github.event.client_payload.environment }}"
-  cancel-in-progress: false
-
 jobs:
   terraform-apply:
     uses: ./.github/workflows/on_wfc_deploy.yml
