@@ -2,6 +2,10 @@
 # tasks file for weatherapp
 
 -
+  name: Debug Images
+  ansible.builtin.debug:
+    msg: "WeatherApp Version: {{ weatherapp_version }}"
+-
   name: Weatherapp frontend docker container
   community.docker.docker_container:
     name: weatherapp_frontend
