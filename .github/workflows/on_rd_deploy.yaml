@@ -14,11 +14,11 @@ jobs:
   terraform-apply:
     uses: ./.github/workflows/on_wfc_deploy.yml
     with:
-      resource_prefix: weatherapp-${{ github.event.client_payload.environment }}
-      environment: weatherapp_${{ github.event.client_payload.environment }}
+      resource_prefix: "weatherapp-${{ github.event.client_payload.environment }}"
+      environment: "weatherapp_${{ github.event.client_payload.environment }}"
       terraform_apply: true
       ansible_site: true
       ansible_weatherapp: true
-      ansible_weatherapp_version: ${{ github.event.client_payload.weatherapp_version }}
+      ansible_weatherapp_version: "${{ github.event.client_payload.weatherapp_version }}"
       terraform_destroy: true
     secrets: inherit
