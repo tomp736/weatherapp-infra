@@ -9,7 +9,7 @@ jobs:
   terraform-apply:
     uses: ./.github/workflows/on_wfc_deploy.yml
     with:
-      prefix: weatherapp-nightly
+      resource_prefix: weatherapp-nightly
       environment: weatherapp_nightly
       terraform_apply: true
       ansible_site: true
