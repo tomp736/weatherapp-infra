@@ -17,12 +17,13 @@
       when: not file_result.stat.exists
 
       block:
-        - 
+        -
           name: Apply Docker Role
           ansible.builtin.import_role:
             name: docker
 
-        - name: Touch ansible.docker file
+        -
+          name: Touch ansible.docker file
           ansible.builtin.file:
             path: "~/ansible.docker"
             mode: '0600'

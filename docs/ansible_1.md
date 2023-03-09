@@ -1,28 +1,38 @@
 # Ansible
 
-## Imported Collections
+The ansible project is setup to configure the a docker host, and configure two docker containers (weather app backend and frontend).
 
-devsec.hardening
+## External Dependancies
 
-### Imported Roles
+### devsec.hardening [Link](https://github.com/dev-sec/ansible-collection-hardening)
 
-devsec.hardening.ssh_hardening
-devsec.hardening.os_hardening
+Applied to docker host to apply known hardening best practices.
+
+Roles Applied
+
+- devsec.hardening.ssh_hardening
+- devsec.hardening.os_hardening
 
 ## Project Playbooks
 
 Site configuration:
 
-site.yml
-playbooks/docker.yml
-playbooks/hardening.yml
+- site.yml : base playbook
+    - playbooks/hardening.yml - hardens the host
+    - playbooks/docker.yml - configures docker
 
 Weatherapp configuration:
 
-weatherapp.yml
-playbooks/weatherapp.yml
+- weatherapp.yml : base playbook
+    - playbooks/weatherapp.yml - configures weather app containers
 
 
 ## Project Roles
 
-roles/docker
+- roles/docker : configures docker
+- roles/weatherapp : configures weatherapp docker containers
+
+## Variables
+
+- weatherapp_appid : weather api key for weatherapp
+- weatherapp_version : version of weatherapp to deploy

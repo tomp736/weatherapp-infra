@@ -37,7 +37,11 @@ on:
         description: 'terraform destroy'
         required: false
         default: false
-      
+
+concurrency: 
+  group: ${{ inputs.environment }}
+  cancel-in-progress: false
+
 jobs:
   terraform-apply:
     uses: ./.github/workflows/on_wfc_terraform.yml
