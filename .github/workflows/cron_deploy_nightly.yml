@@ -14,5 +14,6 @@ jobs:
       terraform_apply: true
       ansible_site: true
       ansible_weatherapp: true
+      ansible_weatherapp_version: '0.1.0'
       terraform_destroy: true
     secrets: inherit
