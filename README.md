@@ -9,7 +9,7 @@ This repository contains source code related to provisioning infrastructure that
 ## Tools Used
 
 - [x] Terraform
-- [ ] Ansible
+- [x] Ansible
 
 ## High Level Objectives
 
