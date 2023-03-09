@@ -31,8 +31,8 @@
           ansible.builtin.import_role:
             name: devsec.hardening.os_hardening
 
-      post_tasks:
         - name: Touch ansible.devsec file
           ansible.builtin.file:
             path: "~/ansible.devsec"
+            mode: '0600'
             state: touch
