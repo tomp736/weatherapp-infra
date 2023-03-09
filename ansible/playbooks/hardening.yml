@@ -8,7 +8,13 @@
 
   tasks:
     -
+      name: Check if ansible.devsec file exists
+      ansible.builtin.stat:
+        path: "~/ansible.devsec"
+      register: file_result
+    -
       name: DevSec Roles
+      when: not file_result.stat.exists
 
       vars:
         sysctl_overwrite:
@@ -24,3 +30,9 @@
         - name: Apply DevSec OS Hardening role
           ansible.builtin.import_role:
             name: devsec.hardening.os_hardening
+
+        - name: Touch ansible.devsec file
+          ansible.builtin.file:
+            path: "~/ansible.devsec"
+            mode: '0600'
+            state: touch
