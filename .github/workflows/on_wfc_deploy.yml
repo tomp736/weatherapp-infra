@@ -29,10 +29,9 @@ on:
         required: false
         default: true
       ansible_weatherapp_version:
-        type: boolean
-        description: 'run weatherapp playbook'
-        required: false
-        default: true
+        type: string
+        description: 'weatherapp version to deploy'
+        required: true
       terraform_destroy:
         type: boolean
         description: 'terraform destroy'
