@@ -8,8 +8,22 @@
 
   tasks:
     -
+      name: Check if ansible.devsec file exists
+      ansible.builtin.stat:
+        path: "~/ansible.docker"
+      register: file_result
+    -
       name: Docker Roles
+      when: not file_result.stat.exists
+
       block:
-        - name: Apply Docker Role
+        - 
+          name: Apply Docker Role
           ansible.builtin.import_role:
             name: docker
+
+        - name: Touch ansible.docker file
+          ansible.builtin.file:
+            path: "~/ansible.docker"
+            mode: '0600'
+            state: touch
