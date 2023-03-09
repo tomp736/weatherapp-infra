@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 concurrency: 
-  group: update-pymp-patch
+  group: "weatherapp_${{ github.event.client_payload.environment }}"
   cancel-in-progress: false
 
 jobs:
