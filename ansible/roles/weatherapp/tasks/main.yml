@@ -6,7 +6,7 @@
   community.docker.docker_container:
     name: weatherapp_frontend
     state: started
-    image: ghcr.io/tomp736/weatherapp/weatherapp_frontend:0.1.0
+    image: ghcr.io/tomp736/weatherapp/weatherapp_frontend:{{ weatherapp_version }}
     restart_policy: always
     ports:
       - '8000:8000'
@@ -17,7 +17,7 @@
   community.docker.docker_container:
     name: weatherapp_backend
     state: started
-    image: ghcr.io/tomp736/weatherapp/weatherapp_backend:0.1.0
+    image: ghcr.io/tomp736/weatherapp/weatherapp_backend:{{ weatherapp_version }}
     restart_policy: always
     ports:
       - '9000:9000'

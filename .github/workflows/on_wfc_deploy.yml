@@ -28,6 +28,11 @@ on:
         description: 'run weatherapp playbook'
         required: false
         default: true
+      ansible_weatherapp_version:
+        type: boolean
+        description: 'run weatherapp playbook'
+        required: false
+        default: true
       terraform_destroy:
         type: boolean
         description: 'terraform destroy'
@@ -51,6 +56,7 @@ jobs:
       environment: ${{ inputs.environment }}
       site: ${{ inputs.ansible_site }}
       weatherapp: ${{ inputs.ansible_weatherapp }}
+      weatherapp_version: ${{ inputs.ansible_weatherapp_version }}
     secrets: inherit
 
   terraform-destroy:

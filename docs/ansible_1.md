@@ -11,9 +11,16 @@ devsec.hardening.os_hardening
 
 ## Project Playbooks
 
+Site configuration:
+
 site.yml
-playbooks/hardening.yml
 playbooks/docker.yml
+playbooks/hardening.yml
+
+Weatherapp configuration:
+
+weatherapp.yml
+playbooks/weatherapp.yml
 
 
 ## Project Roles
