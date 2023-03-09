@@ -1,0 +1,24 @@
+name: 'on repo dispatch deploy'
+on:
+  repository_dispatch:
+    types: [deploy_weatherapp]
+
+permissions:
+  contents: write
+
+concurrency: 
+  group: update-pymp-patch
+  cancel-in-progress: false
+
+jobs:
+  terraform-apply:
+    uses: ./.github/workflows/on_wfc_deploy.yml
+    with:
+      resource_prefix: weatherapp-${{ github.event.client_payload.environment }}
+      environment: weatherapp_${{ github.event.client_payload.environment }}
+      terraform_apply: true
+      ansible_site: true
+      ansible_weatherapp: true
+      ansible_weatherapp_version: ${{ github.event.client_payload.weatherapp_version }}
+      terraform_destroy: true
+    secrets: inherit

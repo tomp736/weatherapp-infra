@@ -17,6 +17,10 @@ on:
         description: 'run weatherapp playbook'
         required: false
         default: false
+      weatherapp_version:
+        type: string
+        description: 'weather app version to deploy'
+        required: true
 
 permissions:
   contents: read
@@ -74,6 +78,6 @@ jobs:
           echo "${KEYFILE}" | ssh-add -
           ansible-playbook -i inventory/ansible_hosts_site weatherapp.yml \
             --extra-vars "weatherapp_appid=${{ secrets.WEATHERAPP_APPID }}" \
-            --extra-vars "weatherapp_version=0.1.0"
+            --extra-vars "weatherapp_version=${{ inputs.weatherapp_version }}"
         env:
           KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
