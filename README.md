@@ -41,6 +41,7 @@ location = "West Europe"
 **Terraform Apply** 
 
 ``` sh
+# assumes you current working directory is terraform
 terraform apply --var-file=default.tfvars
 ```
 
@@ -52,6 +53,7 @@ Terraform will output a file named `ansible_hosts_site`. This file is the invent
 **Terraform Destroy** 
 
 ``` sh
+# assumes you current working directory is terraform
 terraform destroy --var-file=default.tfvars
 ```
 
@@ -75,6 +77,6 @@ After this, you should apply `weatherapp.yml` playbook which will configure the 
 # assumes you current working directory is ansible
 ansible-galaxy install -r requirements.yml
 ansible-playbook -i inventory/ansible_hosts_site weatherapp.yml \
-            --extra-vars "weatherapp_appid=${{ secrets.WEATHERAPP_APPID }}" \
-            --extra-vars "weatherapp_version=${{ inputs.weatherapp_version }}"
+            --extra-vars "weatherapp_appid=<appid>" \
+            --extra-vars "weatherapp_version=<version>"
 ```
