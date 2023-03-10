@@ -26,7 +26,20 @@ permissions:
   contents: read
 
 jobs:
+  always:
+    name: 'always'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    concurrency: 
+      group: ${{ inputs.environment }}
+      cancel-in-progress: false
+    steps:
+      -
+        name: run
+        run: |
+          echo something
   ansible:
+    if: ${{ inputs.site || inputs.weatherapp }}
     name: 'ansible'
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
@@ -51,6 +64,7 @@ jobs:
       - 
         name: Download ansible_hosts_site
         uses: actions/download-artifact@v3
+        continue-on-error: true
         with:
           name: ansible_hosts_site
           path: ansible/inventory
