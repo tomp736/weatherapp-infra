@@ -13,6 +13,7 @@ on:
         - main-promotion
         - dev
         - dev-promotion
+        - nightly
       terraform_apply:
         type: boolean
         description: 'terraform apply'
