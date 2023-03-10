@@ -2,23 +2,6 @@
 
 This repository contains source code related to provisioning infrastructure that will provide weather app services.
 
-## Cloud Provider
-
-- [x] Azure
-
-## Tools Used
-
-- [x] Terraform
-- [x] Ansible
-
-## High Level Objectives
-
-### Azure
-
-- [x] Create Azure Account
-- [x] Create Azure Application
-- [x] Configure Azure Account
-
 ## Local Development
 
 ### Terraform
