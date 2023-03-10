@@ -5,10 +5,16 @@
   ansible.builtin.debug:
     msg: "WeatherApp Version: {{ weatherapp_version }}"
 -
+  name: Creates directory
+  ansible.builtin.file:
+    path: /srv/weatherapp/nginx
+    mode: '0660'
+    state: directory
+-
   name: Nginx Config
   ansible.builtin.copy:
     src: files/default.conf
-    dest: ~/nginx/default.conf
+    dest: /srv/weatherapp/nginx/default.conf
     mode: '0660'
     force: true
 -
@@ -43,4 +49,4 @@
     ports:
       - '80:80'
     volumes:
-      - ~/nginx:/etc/nginx/conf.d
+      - /srv/weatherapp/nginx:/etc/nginx/conf.d
