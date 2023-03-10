@@ -6,7 +6,6 @@
     msg: "WeatherApp Version: {{ weatherapp_version }}"
 -
   name: Nginx Config
-  when: haproxy_cfg_stat.stat.exists
   ansible.builtin.copy:
     src: files/default.conf
     dest: ~/nginx/default.conf

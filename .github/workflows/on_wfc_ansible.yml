@@ -29,10 +29,6 @@ jobs:
   always:
     name: 'always'
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    concurrency: 
-      group: ${{ inputs.environment }}
-      cancel-in-progress: false
     steps:
       -
         name: run
