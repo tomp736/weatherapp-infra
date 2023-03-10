@@ -52,7 +52,7 @@ jobs:
     needs:
     - terraform-apply
     uses: ./.github/workflows/on_wfc_ansible.yml
-    if: ${{ inputs.terraform_apply or inputs.ansible_weatherapp }}
+    if: ${{ inputs.terraform_apply || inputs.ansible_weatherapp }}
     with:
       environment: ${{ inputs.environment }}
       site: ${{ inputs.ansible_site }}
