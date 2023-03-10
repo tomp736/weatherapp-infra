@@ -3,6 +3,16 @@ name: 'Dispatch Deploy'
 on:
   workflow_dispatch:
     inputs:
+      environment:
+        type: choice
+        description: 'environment'
+        required: false
+        default: main
+        options:
+        - main
+        - main-promotion
+        - dev
+        - dev-promotion
       terraform_apply:
         type: boolean
         description: 'terraform apply'
@@ -33,8 +43,8 @@ jobs:
   deploy:
     uses: ./.github/workflows/on_wfc_deploy.yml
     with:
-      environment: weatherapp_${{ github.ref_name }}
-      resource_prefix: weatherapp-${{ github.ref_name }}
+      environment: weatherapp_${{ inputs.environment }}
+      resource_prefix: weatherapp-${{ inputs.environment }}
       terraform_apply: ${{ inputs.terraform_apply }}
       ansible_site: ${{ inputs.ansible_site }}
       ansible_weatherapp: ${{ inputs.ansible_weatherapp }}
