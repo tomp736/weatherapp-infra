@@ -1,10 +1,17 @@
 ---
 # tasks file for weatherapp
-
 -
   name: Debug Images
   ansible.builtin.debug:
     msg: "WeatherApp Version: {{ weatherapp_version }}"
+-
+  name: Nginx Config
+  when: haproxy_cfg_stat.stat.exists
+  ansible.builtin.copy:
+    src: files/default.conf
+    dest: ~/nginx/default.conf
+    mode: '0660'
+    force: true
 -
   name: Weatherapp frontend docker container
   community.docker.docker_container:
@@ -13,9 +20,9 @@
     image: ghcr.io/tomp736/weatherapp/weatherapp_frontend:{{ weatherapp_version }}
     restart_policy: always
     ports:
-      - '8000:8000'
+      - '8000'
     env:
-      ENDPOINT="http://{{ hostvars[inventory_hostname]['ansible_host'] }}:9000/api"
+      ENDPOINT="http://{{ hostvars[inventory_hostname]['ansible_host'] }}/api"
 -
   name: Weatherapp backend docker container
   community.docker.docker_container:
@@ -24,6 +31,17 @@
     image: ghcr.io/tomp736/weatherapp/weatherapp_backend:{{ weatherapp_version }}
     restart_policy: always
     ports:
-      - '9000:9000'
+      - '9000'
     env:
       APPID="{{ weatherapp_appid }}"
+-
+  name: WeatherApp nginx container
+  community.docker.docker_container:
+    name: weatherapp_nginx
+    state: started
+    image: nginx
+    restart_policy: always
+    ports:
+      - '80:80'
+    volumes:
+      - ~/nginx:/etc/nginx/conf.d
