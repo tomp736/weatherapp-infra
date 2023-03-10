@@ -11,6 +11,10 @@
     mode: '0660'
     state: directory
 -
+  name: Create network
+  community.docker.docker_network:
+    name: weatherapp
+-
   name: Nginx Config
   ansible.builtin.copy:
     src: files/default.conf
@@ -43,6 +47,11 @@
   name: WeatherApp nginx container
   community.docker.docker_container:
     name: weatherapp_nginx
+    state: stopped
+-
+  name: WeatherApp nginx container
+  community.docker.docker_container:
+    name: weatherapp_nginx
     state: started
     image: nginx
     restart_policy: always
@@ -50,3 +59,12 @@
       - '80:80'
     volumes:
       - /srv/weatherapp/nginx:/etc/nginx/conf.d
+
+-
+  name: Add to weatherapp network
+  community.docker.docker_network:
+    name: weatherapp
+    connected:
+      - weatherapp_frontend
+      - weatherapp_backend
+      - weatherapp_nginx
