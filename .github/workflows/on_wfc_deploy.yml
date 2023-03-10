@@ -41,6 +41,7 @@ on:
 jobs:
   terraform-apply:
     uses: ./.github/workflows/on_wfc_terraform.yml
+    if: ${{ inputs.terraform_apply }}
     with:
       environment: ${{ inputs.environment }}
       prefix: ${{ inputs.resource_prefix }}
@@ -51,6 +52,7 @@ jobs:
     needs:
     - terraform-apply
     uses: ./.github/workflows/on_wfc_ansible.yml
+    if: ${{ inputs.terraform_apply or inputs.ansible_weatherapp }}
     with:
       environment: ${{ inputs.environment }}
       site: ${{ inputs.ansible_site }}
@@ -62,6 +64,7 @@ jobs:
     needs:
     - ansible
     uses: ./.github/workflows/on_wfc_terraform.yml
+    if: ${{ inputs.terraform_destroy }}
     with:
       environment: ${{ inputs.environment }}
       prefix: ${{ inputs.resource_prefix }}
