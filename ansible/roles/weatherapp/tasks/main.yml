@@ -47,6 +47,7 @@
   name: WeatherApp nginx container
   community.docker.docker_container:
     name: weatherapp_nginx
+    image: nginx
     state: stopped
 -
   name: WeatherApp nginx container
