@@ -26,7 +26,20 @@ permissions:
   contents: read
 
 jobs:
+  always:
+    name: 'ansible'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    concurrency: 
+      group: ${{ inputs.environment }}
+      cancel-in-progress: false
+    steps:
+      -
+        name: run
+        run: |
+          echo something
   ansible:
+    if: ${{ inputs.site || inputs.weatherapp }}
     name: 'ansible'
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
@@ -64,7 +77,6 @@ jobs:
           KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
       -       
         name: site playbook
-        if: ${{ inputs.site }}
         working-directory: ansible
         run: |
           eval `ssh-agent`
@@ -74,7 +86,6 @@ jobs:
           KEYFILE: ${{ secrets.DEPLOY_PRIVKEY }}
       - 
         name: weatherapp playbook
-        if: ${{ inputs.weatherapp }}
         working-directory: ansible
         run: |
           eval `ssh-agent`
