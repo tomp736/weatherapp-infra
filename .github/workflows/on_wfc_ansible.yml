@@ -27,6 +27,7 @@ permissions:
 
 jobs:
   ansible:
+    if: ${{ inputs.site || inputs.weatherapp }}
     name: 'ansible'
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
